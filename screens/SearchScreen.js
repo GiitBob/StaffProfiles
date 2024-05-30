@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, TouchableOpacity, ScrollView, StyleSheet, Image } from 'react-native';
 import { staffData } from '../screens/staffData';
 import { base64Logo } from '../base64Data';
+import { useFontSize } from './FontSizeContext';
 
 export default function SearchScreen({ navigation }) {
+  const { fontSize } = useFontSize();
   const [searchCriteria, setSearchCriteria] = useState('');
   const [searchResult, setSearchResult] = useState(staffData);
 
@@ -15,20 +17,20 @@ export default function SearchScreen({ navigation }) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={{ ...styles.container, fontSize }}>
       <View style={styles.logoContainer}>
         <Image
           source={{ uri: `data:image/png;base64,${base64Logo}` }}
           style={styles.logo}
         />
       </View>
-      <Text style={styles.subtitle}>Staff Profiles Directory</Text>
+      <Text style={{ ...styles.subtitle, fontSize }}>Staff Profiles Directory</Text>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Search"
           onChangeText={text => setSearchCriteria(text)}
           value={searchCriteria}
-          style={styles.input}
+          style={{ ...styles.input, fontSize }}
         />
         <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
           <Text style={styles.searchButtonText}>🔍</Text>
@@ -36,11 +38,11 @@ export default function SearchScreen({ navigation }) {
       </View>
       {searchResult.map((staff, index) => (
         <TouchableOpacity key={index} onPress={() => navigation.navigate('ProfileView', { staff })}>
-          <Text style={styles.staffName}>{staff.name}</Text>
+          <Text style={{ ...styles.staffName, fontSize }}>{staff.name}</Text>
         </TouchableOpacity>
       ))}
       <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('NewProfile')}>
-        <Text style={styles.addButtonLabel}>Add New Profile</Text>
+        <Text style={{ ...styles.addButtonLabel, fontSize }}>Add New Profile</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   logo: {
-    width: '45%',
+    width: '30%',
     aspectRatio: 2,
   },
   subtitle: {

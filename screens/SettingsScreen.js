@@ -1,37 +1,12 @@
+// SettingsScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Slider from '@react-native-community/slider';
+import { useFontSize } from './FontSizeContext';
 
 const SettingsScreen = ({ navigation }) => {
-  const [fontSize, setFontSize] = useState(16);
-
-  useEffect(() => {
-    const loadFontSize = async () => {
-      try {
-        const savedFontSize = await AsyncStorage.getItem('fontSize');
-        if (savedFontSize) {
-          setFontSize(parseInt(savedFontSize, 10));
-        }
-      } catch (error) {
-        console.error('Failed to load font size', error);
-      }
-    };
-    loadFontSize();
-  }, []);
-
-  const saveFontSize = async (size) => {
-    try {
-      await AsyncStorage.setItem('fontSize', size.toString());
-    } catch (error) {
-      console.error('Failed to save font size', error);
-    }
-  };
-
-  const handleFontSizeChange = (size) => {
-    setFontSize(size);
-    saveFontSize(size);
-  };
+  const { fontSize, handleFontSizeChange } = useFontSize();
 
   return (
     <View style={styles.container}>

@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert, ScrollView, Image, KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { base64Logo } from '../base64Data';
+import { useFontSize } from './FontSizeContext';
 
 const NewAccountScreen = ({ navigation }) => {
+  const { fontSize } = useFontSize();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -28,7 +31,7 @@ const NewAccountScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={{ ...styles.container, fontSize }}>
         <Image
           source={{ uri: `data:image/png;base64,${base64Logo}` }}
           style={styles.logo}
@@ -37,14 +40,14 @@ const NewAccountScreen = ({ navigation }) => {
           placeholder="Email"
           onChangeText={text => setEmail(text)}
           value={email}
-          style={styles.input}
+          style={{ ...styles.input, fontSize }}
         />
         <TextInput
           placeholder="Password"
           onChangeText={text => setPassword(text)}
           value={password}
           secureTextEntry
-          style={styles.input}
+          style={{ ...styles.input, fontSize }}
         />
         <Button title="Create Account" onPress={handleCreateAccount} />
       </ScrollView>

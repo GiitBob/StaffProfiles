@@ -1,12 +1,14 @@
+// LoginScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert, Text, Image, KeyboardAvoidingView, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { base64Logo } from '../base64Data';
+import { useFontSize } from './FontSizeContext';
 
 const LoginScreen = ({ navigation }) => {
+  const { fontSize } = useFontSize();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fontSize, setFontSize] = useState(16);
 
   useEffect(() => {
     AsyncStorage.getItem('email').then(savedEmail => {
@@ -14,14 +16,6 @@ const LoginScreen = ({ navigation }) => {
         setEmail(savedEmail);
       }
     });
-
-    const loadFontSize = async () => {
-      const savedFontSize = await AsyncStorage.getItem('fontSize');
-      if (savedFontSize) {
-        setFontSize(parseInt(savedFontSize, 10));
-      }
-    };
-    loadFontSize();
   }, []);
 
   const handleLogin = async () => {
@@ -47,7 +41,7 @@ const LoginScreen = ({ navigation }) => {
           source={{ uri: `data:image/png;base64,${base64Logo}` }}
           style={[styles.logo, { marginTop: -20 }]}
         />
-        <Text style={{ fontSize: 20, color: 'black' }}>Staff Access</Text>
+        <Text style={{ fontSize: 20 * (fontSize / 16), color: 'black' }}>Staff Access</Text>
         <TextInput
           placeholder="Email"
           onChangeText={text => setEmail(text)}

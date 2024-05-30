@@ -1,21 +1,23 @@
 import React from 'react';
 import { View, Text, Button, Image, StyleSheet } from 'react-native';
 import { base64Logo } from '../base64Data';
+import { useFontSize } from './FontSizeContext';
 
 export default function ProfileViewScreen({ route, navigation }) {
   const { staff } = route.params;
+  const { fontSize } = useFontSize();
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, fontSize }}>
       <View style={styles.logoContainer}>
         <Image source={{ uri: `data:image/png;base64,${base64Logo}` }} style={styles.logo} />
       </View>
-      <Text style={styles.title}>Staff Information</Text>
-      <Text style={styles.text}>Name: {staff.name}</Text>
-      <Text style={styles.text}>Phone: {staff.phone}</Text>
-      <Text style={styles.text}>Department: {staff.department}</Text>
+      <Text style={{ ...styles.title, fontSize }}>Staff Information</Text>
+      <Text style={{ ...styles.text, fontSize }}>Name: {staff.name}</Text>
+      <Text style={{ ...styles.text, fontSize }}>Phone: {staff.phone}</Text>
+      <Text style={{ ...styles.text, fontSize }}>Department: {staff.department}</Text>
       <View style={styles.addressContainer}>
-        <Text style={styles.addressText}>
+        <Text style={{ ...styles.addressText, fontSize }}>
           Address: {staff.address.street}, {staff.address.city}, {staff.address.state}, {staff.address.zip}, {staff.address.country}
         </Text>
       </View>
@@ -34,14 +36,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
     resizeMode: 'contain',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 0,
   },
   text: {
     fontSize: 16,
